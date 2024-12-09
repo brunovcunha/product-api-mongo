@@ -45,9 +45,10 @@ public class ProductController {
     }
 
     @GetMapping("/category/{categoryId}")
-    private ResponseEntity<ProductDTO> findByCategoryId(@PathVariable String categoryId) {
+    public ResponseEntity<List<ProductDTO>> getByCategoryId(@PathVariable String categoryId) {
         return ResponseEntity.ok(productService.findByCategoryId(categoryId));
     }
+
 
     @DeleteMapping("/{productId}")
     private ResponseEntity<Void> delete(@PathVariable String productId) {

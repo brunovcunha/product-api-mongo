@@ -78,14 +78,18 @@ public class ProductService {
 
     }
 
-    public ProductDTO findByCategoryId(String categoryId) {
-        try {
-            Product product = productRepository.findByCategoryId(categoryId);
-            return ProductDTO.convert(product);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Product not found");
+    public List<ProductDTO> findByCategoryId(String categoryId) {
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+
+        if (products.isEmpty()) {
+            throw new RuntimeException("No products found for the given category ID");
         }
+
+        return products.stream()
+                .map(ProductDTO::convert)
+                .collect(Collectors.toList());
     }
+
 
     public void delete(String productId) {
         Product product = productRepository.findById(productId)
