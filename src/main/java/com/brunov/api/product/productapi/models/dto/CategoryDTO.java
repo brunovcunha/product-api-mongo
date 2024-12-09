@@ -19,9 +19,13 @@ public class CategoryDTO {
     private String nome;
 
     public static CategoryDTO convert(Category category) {
+        if (category == null) {
+            return null;
+        }
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(category.getId());
         categoryDTO.setNome(category.getNome());
         return categoryDTO;
     }
+
 }

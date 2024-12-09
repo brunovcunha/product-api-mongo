@@ -2,6 +2,7 @@ package com.brunov.api.product.productapi.models.dto;
 
 
 import com.brunov.api.product.productapi.models.Product;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductDTO {
+
     private String id;
-    private String productIdentifier;
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
+    @NotBlank(message = "Descricao é obrigatória")
     private String descricao;
+    private String productIdentifier;
     private Double preco;
 
     private CategoryDTO category;
@@ -23,11 +27,13 @@ public class ProductDTO {
     public static ProductDTO convert(Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
-        productDTO.setProductIdentifier(product.getProductIdentifier());
         productDTO.setNome(product.getNome());
         productDTO.setDescricao(product.getDescricao());
         productDTO.setPreco(product.getPreco());
-        productDTO.setCategory(CategoryDTO.convert(product.getCategory()));
+        if (product.getCategory() != null) {
+            productDTO.setCategory(CategoryDTO.convert(product.getCategory()));
+        }
         return productDTO;
     }
+
 }
